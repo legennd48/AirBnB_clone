@@ -6,7 +6,7 @@
 
 
 import uuid
-import datetime
+from datetime import datetime
 
 
 class BaseModel:
@@ -25,14 +25,28 @@ class BaseModel:
             save: updates "updated_at" attribute
             to_dict: converts instances to dictionary representation
     """
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """
             This is the constructor method
             for the BaseModel class. 
-        """
+        """ 
         self.id = str(uuid.uuid4())
-        self.created_at = datetime.datetime.now()
-        self.updated_at = datetime.datetime.now()
+        self.created_at = datetime.now()
+        self.updated_at = datetime.now()
+
+        if kwargs:
+            self.id = kwargs.get("id", self.id)
+            self.created_at = datetime.fromisoformat(kwargs.get("created_at", self.created_at))
+            self.updated_at = datetime.fromisoformat(kwargs.get("updated_at", self.updated_at))
+
+        if args:
+            if len(args) >= 1:
+                self.id = args[0]
+            if len(args) >= 2:
+                self.created_at = datetime.fromisoformat(args[1])
+            if len(args) >= 3:
+                self.updated_at = datetime.fromisoformat(args[2])
+            
 
     def __str__(self):
         """
