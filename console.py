@@ -21,5 +21,8 @@ class HBNBCommand(cmd.Cmd):
         ''' Does nothing when empty line is passed '''
         pass
 
+    def do_create(self, className):
+        if className:
+            instance = 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
