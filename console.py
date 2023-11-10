@@ -7,12 +7,17 @@ import cmd
 from models.base_model import BaseModel
 from models import storage
 from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
     '''This is the entry point of the command line interpreter '''
     prompt = '(hbnb) '
-    __classList = {"BaseModel", "User"}
+    __classList = {"BaseModel", "User", "State", "City", "Amenity", "Place", "Review"}
 
     def do_EOF(self, line):
         '''Exits the program (interpreter)'''
@@ -32,7 +37,7 @@ class HBNBCommand(cmd.Cmd):
         if not className:
             print("** class name missing **")
         elif className in HBNBCommand.__classList:
-            instance = BaseModel()
+            instance = globals()[className]()
             instance.save()
             print("{}".format(instance.id))
             storage.save()
