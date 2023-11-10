@@ -80,4 +80,4 @@ class BaseModel:
                 dict_rep[key] = value
 
         return dict_rep
-        
+       
