@@ -61,5 +61,19 @@ class TestBaseModel(unittest.TestCase):
         except ValueError:
             self.fail("created_at and updated_at must be in ISO format")
 
+    def test_recreate_instance_from_dict(self):
+        """ Tests the creation of instance from dictionary """
+        dict_rep = self.base_model.to_dict()
+
+        # Create a new instance from the dictionary
+        recreated_instance = BaseModel(**dict_rep)
+
+        # Verify the properties of the recreated instance
+        self.assertIsInstance(recreated_instance.id, str, "id should be of string type")
+        self.assertIsInstance(recreated_instance.created_at, datetime, "created_at should be of datetime type")
+        self.assertIsInstance(recreated_instance.updated_at, datetime, "updated_at should be of datetime type")
+        self.assertNotIn("__class__", recreated_instance.__dict__, "__class__ should not be assigned as an attribute")
+
+
 if "__name__" == "__main__":
     unittest.main()
