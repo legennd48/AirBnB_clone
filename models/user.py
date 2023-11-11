@@ -3,6 +3,7 @@
 Module: 8. First User
 class user that inherits from BaseModel
 '''
+
 from models.base_model import BaseModel
 
 
