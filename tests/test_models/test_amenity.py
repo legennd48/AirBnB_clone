@@ -132,7 +132,7 @@ class TestAmenitySave(unittest.TestCase):
         amenity_instance = Amenity()
         amenity_instance.save()
         amenity_id = "Amenity." + amenity_instance.id
-        with open("file.json", "r") as f:
+        with open("vault.json", "r") as f:
             self.assertIn(amenity_id, f.read())
 
 

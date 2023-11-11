@@ -12,6 +12,8 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
+import re
+from shlex import split
 
 
 class HBNBCommand(cmd.Cmd):
@@ -19,6 +21,29 @@ class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
     __classList = {"BaseModel", "User", "State",
                    "City", "Amenity", "Place", "Review"}
+
+    def default(self, argument):
+        '''
+        Default behavior for cmd module when input is invalid
+        added to make <class name>.<method()> syntax possible
+        '''
+        method_dict = {"all": self.do_all, "show": self.do_show,
+                       "destroy": self.do_destroy, "count": self.do_count,
+                       "update": self.do_update}
+
+        dot_match = re.search(r"\.", argument)
+        if dot_match:
+            parts = argument.split('.', 1)
+            if len(parts) == 2:
+                method_name, args_str = parts[1].split(
+                    '(', 1) if '(' in parts[1] else (parts[1], None)
+                method_name = method_name.strip()
+                if method_name in method_dict:
+                    args = args_str.rstrip(')') if args_str else ''
+                    full_command = f"{parts[0]} {args}"
+                    return method_dict[method_name](full_command)
+        print("*** Unknown syntax: {}".format(argument))
+        return False
 
     def do_EOF(self, line):
         '''Exits the program (interpreter)'''
@@ -146,6 +171,16 @@ class HBNBCommand(cmd.Cmd):
                     obj_instance.__dict__[k] = v
         storage.save()
 
+    def do_count(self, arg):
+        '''retrieves the number of instances of a
+        class: <class name>.count()
+        '''
+        args = arg.split()
+        instance_count = 0
+        for instance in storage.all().values():
+            if args[0] == instance.__class__.__name__:
+                instance_count += 1
+        print(instance_count)
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
