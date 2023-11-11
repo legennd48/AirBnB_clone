@@ -17,7 +17,8 @@ from models.review import Review
 class HBNBCommand(cmd.Cmd):
     '''This is the entry point of the command line interpreter '''
     prompt = '(hbnb) '
-    __classList = {"BaseModel", "User", "State", "City", "Amenity", "Place", "Review"}
+    __classList = {"BaseModel", "User", "State",
+                   "City", "Amenity", "Place", "Review"}
 
     def do_EOF(self, line):
         '''Exits the program (interpreter)'''
@@ -45,7 +46,9 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
     def do_show(self, args):
-        '''Prints string representation of an instance based class name nd id'''
+        '''Prints string representation of an
+        instance based class name nd id
+        '''
 
         argsList = args.split()
         allObjects = storage.all()
@@ -134,9 +137,9 @@ class HBNBCommand(cmd.Cmd):
         elif type(eval(argList[2])) == dict:
             obj_instance = allObjects["{}.{}".format(argList[0], argList[1])]
             for k, v in eval(argList[2]).items():
-                if (k in obj_instance.__class__.__dict__.keys() and
-                    type(obj_instance.__class__.__dict__[k])
-                    in {str, int, float}):
+                if (k in obj_instance.__class__.__dict__.keys()
+                        and type(obj_instance.__class__.__dict__[k])
+                        in {str, int, float}):
                     val_type = type(obj_instance.__class__.__dict__[k])
                     obj_instance.__dict__[k] = val_type(v)
                 else:
