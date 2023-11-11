@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 
+
 """
     This module tests BaseModel class
 """
-
 
 import unittest
 from datetime import datetime

@@ -3,6 +3,7 @@
 '''
 class amenity that inherits from BaseModel
 '''
+
 from models.base_model import BaseModel
 
 
