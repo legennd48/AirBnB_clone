@@ -20,32 +20,31 @@ class TestPlaceClass(unittest.TestCase):
         """ Set up a Place Class instance """
         self.place_instance = Place()
 
-   
     def test_attributes_inherited_from_BaseModel(self):
         """ Tests that place has BaseModel attributes"""
-        self.assertTrue(hasattr(self.place_instance,"id"))
-        self.assertTrue(hasattr(self.place_instance,"created_at"))
-        self.assertTrue(hasattr(self.place_instance,"updated_at"))
-    
+        self.assertTrue(hasattr(self.place_instance, "id"))
+        self.assertTrue(hasattr(self.place_instance, "created_at"))
+        self.assertTrue(hasattr(self.place_instance, "updated_at"))
+
     def test_default_values(self):
         """ Tests that default value of name set properly """
-        self.assertEqual(self.place_instance.name, "", "default value of name must be empty string")
-        self.assertEqual(self.place_instance.amenity_ids, [], "default value of amenity_ids must be empty list")
-        self.assertEqual(self.place_instance.city_id, "", "default value of city_id must be empty string")
-        self.assertEqual(self.place_instance.user_id, "", "default value of user_id must be empty string")
-        self.assertEqual(self.place_instance.description, "", "default value of description must be empty string")
-        self.assertEqual(self.place_instance.number_rooms, 0, "default value of number_rooms must be integer 0")
-        self.assertEqual(self.place_instance.number_bathrooms, 0, "default value of number_bathrooms must be integer 0")
-        self.assertEqual(self.place_instance.max_guest, 0, "default value of max_guest must be integer 0")
-        self.assertEqual(self.place_instance.price_by_night, 0, "default value of price_by_night must be integer 0")
-        self.assertEqual(self.place_instance.latitude, 0.0, "default value of latitude must be float 0.0")
-        self.assertEqual(self.place_instance.longitude, 0.0, "default value of longitude must be float 0.0")
+        self.assertEqual(self.place_instance.name, "")
+        self.assertEqual(self.place_instance.amenity_ids, [])
+        self.assertEqual(self.place_instance.city_id, "")
+        self.assertEqual(self.place_instance.user_id, "")
+        self.assertEqual(self.place_instance.description, "")
+        self.assertEqual(self.place_instance.number_rooms, 0)
+        self.assertEqual(self.place_instance.number_bathrooms, 0)
+        self.assertEqual(self.place_instance.max_guest, 0)
+        self.assertEqual(self.place_instance.price_by_night, 0)
+        self.assertEqual(self.place_instance.latitude, 0.0)
+        self.assertEqual(self.place_instance.longitude, 0.0)
 
     def test_name_attribute(self):
         """ Tests name attribute """
         self.place_instance.name = "New Place"
-        self.assertEqual(self.place_instance.name, "New Place", "name must be set to value passed")
-    
+        self.assertEqual(self.place_instance.name, "New Place")
+
     def test_created_at_and_updated_at_are_datetime_objects(self):
         """ Test that created_at and updated_at are datetime objects"""
         self.assertIsInstance(self.place_instance.created_at, datetime)
@@ -56,7 +55,7 @@ class TestPlaceClass(unittest.TestCase):
         prev_updated_at = self.place_instance.updated_at
         self.place_instance.save()
         curr_updated_at = self.place_instance.updated_at
-        self.assertNotEqual(prev_updated_at, curr_updated_at, "save method should update updated_at")
+        self.assertNotEqual(prev_updated_at, curr_updated_at)
 
     def test_to_dict_method_inherited_from_BaseModel(self):
         """ Tests that to_dict returns a dictionary representation of
@@ -66,12 +65,12 @@ class TestPlaceClass(unittest.TestCase):
         created_at_str = dict_rep["created_at"]
         updated_at_str = dict_rep["updated_at"]
 
-        self.assertIsInstance(dict_rep, dict, "to_dict should return a dictionary")
-        self.assertIn("__class__", dict_rep, "dict_rep should contain '__class__' key")
-        self.assertEqual(dict_rep["__class__"], "Place", "'__class__' should be the class name")
+        self.assertIsInstance(dict_rep, dict)
+        self.assertIn("__class__", dict_rep)
+        self.assertEqual(dict_rep["__class__"], "Place")
 
-        self.assertIsInstance(created_at_str, str, "created_at should be a string")
-        self.assertIsInstance(updated_at_str, str, "updated_at should be a string")
+        self.assertIsInstance(created_at_str, str)
+        self.assertIsInstance(updated_at_str, str)
 
         try:
             datetime.fromisoformat(created_at_str)
@@ -79,6 +78,7 @@ class TestPlaceClass(unittest.TestCase):
 
         except ValueError:
             self.fail("created_at and updated_at must be in ISO format")
+
 
 if "__name__" == "__main__":
     unittest.main()
