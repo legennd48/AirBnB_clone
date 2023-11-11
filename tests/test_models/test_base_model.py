@@ -19,11 +19,11 @@ class TestBaseModel(unittest.TestCase):
             Set up a BaseModel instance
         """
         self.base_model = BaseModel()
-    
+
     def test_id(self):
         """ Tests that id is a string """
         self.assertIsInstance(self.base_model.id, str, "id should be a string")
-    
+
     def test_created_at(self):
         """ Tests that created_at is datetime """
         self.assertIsInstance(self.base_model.created_at, datetime, "created_at should be a datetime")
