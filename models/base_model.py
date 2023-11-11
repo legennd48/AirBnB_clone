@@ -36,8 +36,10 @@ class BaseModel:
 
         if kwargs:
             self.id = kwargs.get("id", self.id)
-            self.created_at = datetime.fromisoformat(kwargs.get("created_at", self.created_at))
-            self.updated_at = datetime.fromisoformat(kwargs.get("updated_at", self.updated_at))
+            self.created_at = datetime.fromisoformat(
+                kwargs.get("created_at", self.created_at))
+            self.updated_at = datetime.fromisoformat(
+                kwargs.get("updated_at", self.updated_at))
         else:
             models.storage.new(self)
 
