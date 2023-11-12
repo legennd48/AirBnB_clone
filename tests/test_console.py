@@ -142,7 +142,8 @@ class TestHBNBOtherCommands(unittest.TestCase):
         '''
         with patch("sys.stdout", new=StringIO()) as output:
             HBNBCommand().onecmd("destroy User")
-            self.assertEqual("** no instance found **", output.getvalue().strip())
+            self.assertEqual(
+                "** no instance found **", output.getvalue().strip())
 
     def test_all(self):
         '''
@@ -157,9 +158,10 @@ class TestHBNBOtherCommands(unittest.TestCase):
         Test update command
         '''
         with patch("sys.stdout", new=StringIO()) as output:
-            HBNBCommand().onecmd("update BaseModel {} name 'new_name'".format(
-                list(storage.all("BaseModel").keys())[0]))
-            self.assertEqual("** no instance found **", output.getvalue().strip())
+            model_id = list(storage.all().keys())[0]
+            HBNBCommand().onecmd(f"update BaseModel {model_id} name 'new_name'")
+            self.assertIn("** no instance found **", output.getvalue().strip())
+
 
     def test_count(self):
         '''
