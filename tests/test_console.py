@@ -134,7 +134,8 @@ class TestHBNBOtherCommands(unittest.TestCase):
         '''
         with patch("sys.stdout", new=StringIO()) as output:
             HBNBCommand().onecmd("show BaseModel")
-            self.assertIn("BaseModel", output.getvalue().strip())
+            self.assertIn(
+                "** instance id missing **", output.getvalue().strip())
 
     def test_destroy(self):
         '''
@@ -143,7 +144,7 @@ class TestHBNBOtherCommands(unittest.TestCase):
         with patch("sys.stdout", new=StringIO()) as output:
             HBNBCommand().onecmd("destroy User")
             self.assertEqual(
-                "** no instance found **", output.getvalue().strip())
+                "** instance id missing **", output.getvalue().strip())
 
     def test_all(self):
         '''
@@ -159,9 +160,9 @@ class TestHBNBOtherCommands(unittest.TestCase):
         '''
         with patch("sys.stdout", new=StringIO()) as output:
             model_id = list(storage.all().keys())[0]
-            HBNBCommand().onecmd(f"update BaseModel {model_id} name 'new_name'")
+            HBNBCommand().onecmd(
+                f"update BaseModel {model_id} name 'new_name'")
             self.assertIn("** no instance found **", output.getvalue().strip())
-
 
     def test_count(self):
         '''
