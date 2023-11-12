@@ -39,22 +39,9 @@ class HBNBCommand(cmd.Cmd):
                     '(', 1) if '(' in parts[1] else (parts[1], None)
                 method_name = method_name.strip()
                 if method_name in method_dict:
-                    if method_name == 'update':
-                        update_dir_match = re.search(
-                            r"(?<=\{)([^\}]+)(?=\})", args_str)
-                        update_parts = args_str.split()
-                        update_id = update_parts[0].replace(
-                            '"', '').replace(',', '')
-                        if update_dir_match:
-                            content = update_dir_match.group()
-                            dir_string = '{' + content[:] + '}'
-                            revised_args = "{} {} {}".format(
-                                parts[0], update_id, dir_string)
-                            return method_dict['update'](revised_args)
-                    get_args = "{} {}".format(
-                        parts[0], args_str.replace('"', ''))
-                    return method_dict[method_name](get_args)
-
+                    args = args_str.rstrip(')') if args_str else ''
+                    full_command = f"{parts[0]} {args}"
+                    return method_dict[method_name](full_command)
         print("*** Unknown syntax: {}".format(argument))
         return False
 
