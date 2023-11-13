@@ -134,7 +134,8 @@ class TestHBNBOtherCommands(unittest.TestCase):
         '''
         with patch("sys.stdout", new=StringIO()) as output:
             HBNBCommand().onecmd("show BaseModel")
-            self.assertIn("BaseModel", output.getvalue().strip())
+            self.assertIn(
+                "** instance id missing **", output.getvalue().strip())
 
     def test_destroy(self):
         '''
@@ -143,7 +144,7 @@ class TestHBNBOtherCommands(unittest.TestCase):
         with patch("sys.stdout", new=StringIO()) as output:
             HBNBCommand().onecmd("destroy User")
             self.assertEqual(
-                "** no instance found **", output.getvalue().strip())
+                "** instance id missing **", output.getvalue().strip())
 
     def test_all(self):
         '''
@@ -159,9 +160,9 @@ class TestHBNBOtherCommands(unittest.TestCase):
         '''
         with patch("sys.stdout", new=StringIO()) as output:
             model_id = list(storage.all().keys())[0]
-            HBNBCommand().onecmd(f"update BaseModel {model_id} name 'new_name'")
+            HBNBCommand().onecmd(
+                f"update BaseModel {model_id} name 'new_name'")
             self.assertIn("** no instance found **", output.getvalue().strip())
-
 
     def test_count(self):
         '''
@@ -169,6 +170,75 @@ class TestHBNBOtherCommands(unittest.TestCase):
         '''
         with patch("sys.stdout", new=StringIO()) as output:
             HBNBCommand().onecmd("count BaseModel")
+            self.assertEqual("2", output.getvalue().strip())
+
+
+class TestHBNBCommand_count(unittest.TestCase):
+    """Unittests for testing the count method."""
+
+    @classmethod
+    def setUpClass(cls):
+        """Set up class-level resources before running the tests."""
+        try:
+            os.rename("vault.json", "tmp")
+        except IOError:
+            pass
+        FileStorage._FileStorage__objects = {}
+
+    @classmethod
+    def tearDownClass(cls):
+        """Clean up class-level resources after running the tests."""
+        try:
+            os.remove("vault.json")
+        except IOError:
+            pass
+        try:
+            os.rename("tmp", "vault.json")
+        except IOError:
+            pass
+
+    def test_count_invalid_class(self):
+        """Test the count method with an invalid class name."""
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("MyModel.count()"))
+            self.assertEqual("0", output.getvalue().strip())
+
+    def test_count_object(self):
+        """Test the count method with valid class names and created objects."""
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("create BaseModel"))
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("BaseModel.count()"))
+            self.assertEqual("1", output.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("create User"))
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("User.count()"))
+            self.assertEqual("1", output.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("create State"))
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("State.count()"))
+            self.assertEqual("1", output.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("create City"))
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("City.count()"))
+            self.assertEqual("1", output.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("create Place"))
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("Place.count()"))
+            self.assertEqual("1", output.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("create Review"))
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("Review.count()"))
+            self.assertEqual("1", output.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("create Amenity"))
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("Amenity.count()"))
             self.assertEqual("1", output.getvalue().strip())
 
 
