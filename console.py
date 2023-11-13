@@ -182,5 +182,6 @@ class HBNBCommand(cmd.Cmd):
                 instance_count += 1
         print(instance_count)
 
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
