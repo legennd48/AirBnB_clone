@@ -21,7 +21,7 @@ import console
 import tests
 
 
-class TestHBNB_prompt(unittest.TestCase):
+class TestHBNBCommand_prompt(unittest.TestCase):
     '''
     Test cases for HBNBCommand prompt and emptyline methods
     '''
@@ -35,7 +35,7 @@ class TestHBNB_prompt(unittest.TestCase):
             self.assertEqual("", output.getvalue().strip())
 
 
-class TestHBNBcreate(unittest.TestCase):
+class TestHBNBCommand_create(unittest.TestCase):
     '''
     Test cases for HBNBCommand create method
     '''
@@ -164,16 +164,8 @@ class TestHBNBOtherCommands(unittest.TestCase):
                 f"update BaseModel {model_id} name 'new_name'")
             self.assertIn("** no instance found **", output.getvalue().strip())
 
-    def test_count(self):
-        '''
-        Test count command
-        '''
-        with patch("sys.stdout", new=StringIO()) as output:
-            HBNBCommand().onecmd("count BaseModel")
-            self.assertEqual("2", output.getvalue().strip())
 
-
-class TestHBNBCommand_count(unittest.TestCase):
+class Test_HBNB_count(unittest.TestCase):
     """Unittests for testing the count method."""
 
     @classmethod
