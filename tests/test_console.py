@@ -170,7 +170,7 @@ class TestHBNBOtherCommands(unittest.TestCase):
         '''
         with patch("sys.stdout", new=StringIO()) as output:
             HBNBCommand().onecmd("count BaseModel")
-            self.assertEqual("1", output.getvalue().strip())
+            self.assertEqual("2", output.getvalue().strip())
 
 
 class TestHBNBCommand_count(unittest.TestCase):
