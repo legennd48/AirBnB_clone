@@ -31,8 +31,7 @@ button:hover {
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: stretch;
+    align-items: flex-start;
     margin-left: 5%;
 }
 h3 {
