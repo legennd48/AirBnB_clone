@@ -74,6 +74,10 @@ h4 {
 }
 .amenities .popover li {
     margin-left: 20%;
-    margin-top: 20px;
-    margin-bottom: 20px;
+}
+.amenities .popover li:last-child {
+    margin-bottom: 30px;
+}
+.amenities .popover li:first-child {
+    margin-top: 30px;
 }
